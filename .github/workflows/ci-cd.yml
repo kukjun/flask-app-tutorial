@@ -26,8 +26,21 @@ jobs:
       run: |
         python -m unittest discover tests
     
-    - name: Build Docker image
-      run: |
-        docker build -t flask-app:latest .
+    # 현재 시간을 YYYYMMDDHHMMSS 형식으로 설정
+    - name: Get current time
+      run: echo "CURRENT_TIME=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
     
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: ./Dockerfile
+        push: true
+        tags: kukjunlee/flask-app-github-action:${{ env.CURRENT_TIME }}
     # Optional: Add additional steps to push the Docker image to a registry like Docker Hub

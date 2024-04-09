@@ -42,5 +42,5 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: kukjunlee/flask-app-github-action:${{ env.CURRENT_TIME }}
+        tags: kukjun/flask-app-github-action:${{ env.CURRENT_TIME }}
     # Optional: Add additional steps to push the Docker image to a registry like Docker Hub
